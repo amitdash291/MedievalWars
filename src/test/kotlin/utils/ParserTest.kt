@@ -43,7 +43,7 @@ class ParserTest : WordSpec({
 
     "Army Output Parsing" When {
         "given a list of platoons" Should {
-            "print them as expected" {
+            "serialize them in the expected string format" {
                 val platoons = listOf(
                     Platoon(PlatoonType.FootArcher, 20),
                     Platoon(PlatoonType.LightCavalry, 1000),

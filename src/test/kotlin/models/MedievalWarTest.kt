@@ -6,7 +6,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 class MedievalWarTest : WordSpec({
     "MedievalWar" When {
         "given two armies" Should {
-            "return the winning army" {
+            "return the winning order for the first army with at least 3 wins" {
                 val firstArmy = listOf(
                     Platoon(PlatoonType.Spearmen, 10),
                     Platoon(PlatoonType.Militia, 30),

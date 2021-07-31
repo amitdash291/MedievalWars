@@ -65,13 +65,33 @@ class PlatoonTest : WordSpec({
             }
         }
 
+        "fights with a HeavyCavalry Platoon with more than double the number of HeavyCavalry soldiers" Should {
+            "return BattleResult.Win" {
+                val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 81)
+                val heavyCavalryPlatoon = Platoon(type = PlatoonType.HeavyCavalry, count = 40)
+
+                militiaPlatoon.fight(heavyCavalryPlatoon)
+                    .shouldBe(BattleResult.Win)
+            }
+        }
+
         "fights with a HeavyCavalry Platoon with double the number of HeavyCavalry soldiers" Should {
             "return BattleResult.Draw" {
                 val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 80)
-                val spearmenPlatoon = Platoon(type = PlatoonType.HeavyCavalry, count = 40)
+                val heavyCavalryPlatoon = Platoon(type = PlatoonType.HeavyCavalry, count = 40)
 
-                militiaPlatoon.fight(spearmenPlatoon)
+                militiaPlatoon.fight(heavyCavalryPlatoon)
                     .shouldBe(BattleResult.Draw)
+            }
+        }
+
+        "fights with a HeavyCavalry Platoon with less than double the number of HeavyCavalry soldiers" Should {
+            "return BattleResult.Loss" {
+                val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 79)
+                val heavyCavalryPlatoon = Platoon(type = PlatoonType.HeavyCavalry, count = 40)
+
+                militiaPlatoon.fight(heavyCavalryPlatoon)
+                    .shouldBe(BattleResult.Loss)
             }
         }
     }
