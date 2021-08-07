@@ -6,6 +6,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import models.Platoon
 import models.enums.PlatoonType
+import models.enums.TerrainType
 
 class ParserTest : WordSpec({
     "Army Input Parsing" When {
@@ -51,6 +52,22 @@ class ParserTest : WordSpec({
                 )
                 Parser.serializePlatoons(platoons)
                     .shouldBe("FootArcher#20;LightCavalry#1000;HeavyCavalry#120")
+            }
+        }
+    }
+
+    "Terrain types Input Parsing" When {
+        "input contains terrain types data" Should {
+            "return a list of TerrainTypes" {
+                Parser.getTerrainTypes("Plains;Default;Muddy;Hill")
+                    .shouldContainExactly(
+                        listOf(
+                            TerrainType.Plains,
+                            TerrainType.Default,
+                            TerrainType.Muddy,
+                            TerrainType.Hill,
+                        )
+                    )
             }
         }
     }

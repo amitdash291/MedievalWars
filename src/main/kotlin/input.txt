@@ -1,2 +1,3 @@
-Spearmen#10;Militia#30;FootArcher#20;LightCavalry#1000;HeavyCavalry#120
-Militia#10;Spearmen#10;FootArcher#1000;LightCavalry#120;CavalryArcher#100
+Militia#10;FootArcher#5;HeavyCavalry#5;Spearmen#10;LightCavalry#100
+Militia#10;Spearmen#10;FootArcher#100;LightCavalry#120;CavalryArcher#10
+Plains;Default;Default;Default;Default

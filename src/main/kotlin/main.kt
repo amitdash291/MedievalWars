@@ -1,5 +1,4 @@
 import models.MedievalWar
-import models.enums.TerrainType
 import utils.Parser
 import java.io.File
 
@@ -10,13 +9,7 @@ fun main() {
     val medievalWar = MedievalWar(
         firstArmy = firstArmy,
         secondArmy = Parser.getPlatoons(armies[1]),
-        listOf(
-            TerrainType.Default,
-            TerrainType.Default,
-            TerrainType.Default,
-            TerrainType.Default,
-            TerrainType.Default,
-        )
+        terrainTypes = Parser.getTerrainTypes(armies[2])
     )
 
     try {

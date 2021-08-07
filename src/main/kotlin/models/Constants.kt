@@ -12,6 +12,7 @@ object Constants {
         const val SERIALIZED_DEFAULT = "."
     }
 
+    const val PARSING_DELIMITER = ";"
     const val ADVANTAGE_FACTOR = 2
     const val DEFAULT_POSITION = -1
 
