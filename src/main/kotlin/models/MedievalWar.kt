@@ -27,12 +27,10 @@ data class MedievalWar(
 
                 if (originalResult == BattleResult.Win) {
                     winCount++
-                } else if (artilleryPosition == Artillery.DEFAULT_POSITION) {
-                    artilleryPosition =
-                        if (canWinBattleWithArtillery(platoon, opponentPlatoon, terrainType))
-                            currentPosition
-                        else
-                            Artillery.DEFAULT_POSITION
+                } else if (artilleryPosition == Artillery.DEFAULT_POSITION &&
+                    canWinBattleWithArtillery(platoon, opponentPlatoon, terrainType)
+                ) {
+                    artilleryPosition = currentPosition
                 }
 
                 if (isBattleWon(winCount)) {
@@ -44,7 +42,7 @@ data class MedievalWar(
             }
 
             if (isBattleWonWithArtillery(artilleryPosition, winCount)) {
-                battlePlanWithArtillery = BattlePlan(
+                battlePlanWithArtillery = battlePlanWithArtillery ?: BattlePlan(
                     battleOrder = positions.map { p -> firstArmy[p] },
                     artilleryPosition = artilleryPosition
                 )

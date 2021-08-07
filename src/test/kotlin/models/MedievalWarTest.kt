@@ -116,12 +116,12 @@ class MedievalWarTest : WordSpec({
 
                 actualPlan.battleOrder
                     .shouldContainExactly(
-                        Platoon(PlatoonType.Militia, 5),
-                        Platoon(PlatoonType.Militia, 65),
                         Platoon(PlatoonType.Militia, 11),
+                        Platoon(PlatoonType.Militia, 65),
+                        Platoon(PlatoonType.Militia, 5),
                     )
                 actualPlan.artilleryPosition
-                    .shouldBe(2)
+                    .shouldBe(0)
             }
         }
 
