@@ -1,6 +1,7 @@
 package utils
 
 import models.*
+import models.enums.PlatoonType
 
 object Parser {
     fun getPlatoons(army: String): List<Platoon> =

@@ -2,6 +2,8 @@ package models
 
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
+import models.enums.PlatoonType
+import models.enums.TerrainType
 
 class PlatoonConfigurationTest : WordSpec({
     "PlatoonConfiguration - Militia" When {

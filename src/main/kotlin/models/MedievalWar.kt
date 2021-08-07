@@ -2,6 +2,9 @@ package models
 
 import models.Constants.Artillery
 import models.Constants.DEFAULT_POSITION
+import models.enums.BattleResult
+import models.enums.TerrainType
+import models.exceptions.NoWinningPlanException
 import utils.MathsUtil
 
 data class MedievalWar(
@@ -49,7 +52,7 @@ data class MedievalWar(
             }
         }
 
-        return battlePlanWithArtillery ?: throw Exception("There is no chance of winning")
+        return battlePlanWithArtillery ?: throw NoWinningPlanException()
     }
 
     private fun isBattleWon(winCount: Int) = winCount > firstArmy.size / 2

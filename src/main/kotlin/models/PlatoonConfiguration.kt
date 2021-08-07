@@ -1,6 +1,8 @@
 package models
 
 import models.Constants.ADVANTAGE_FACTOR
+import models.enums.PlatoonType
+import models.enums.TerrainType
 
 data class PlatoonConfiguration(
     val advantageAgainst: List<PlatoonType> = listOf(),

@@ -2,9 +2,10 @@ package models
 
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
-import models.PlatoonType.*
-import models.TerrainType.Hill
-import models.TerrainType.Muddy
+import models.enums.*
+import models.enums.PlatoonType.*
+import models.enums.TerrainType.Hill
+import models.enums.TerrainType.Muddy
 
 class PlatoonTest : WordSpec({
     "Platoon Fights - Militia" When {

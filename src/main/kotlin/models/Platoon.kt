@@ -1,6 +1,7 @@
 package models
 
 import models.Constants.PLATOON_CONFIGURATIONS
+import models.enums.*
 import kotlin.math.sign
 
 data class Platoon(

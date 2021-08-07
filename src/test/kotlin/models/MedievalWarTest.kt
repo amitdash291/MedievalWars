@@ -2,6 +2,8 @@ package models
 
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.collections.shouldContainExactly
+import models.enums.PlatoonType
+import models.enums.TerrainType
 
 class MedievalWarTest : WordSpec({
     "MedievalWar" When {

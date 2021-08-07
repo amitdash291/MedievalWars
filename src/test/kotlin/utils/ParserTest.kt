@@ -5,7 +5,7 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import models.Platoon
-import models.PlatoonType
+import models.enums.PlatoonType
 
 class ParserTest : WordSpec({
     "Army Input Parsing" When {

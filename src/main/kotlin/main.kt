@@ -1,8 +1,9 @@
 import models.*
+import models.enums.TerrainType
 import utils.Parser
 import java.io.File
 
-fun main(args: Array<String>) {
+fun main() {
     val armies = File("src/main/kotlin/input.txt")
         .readLines()
     val firstArmy = Parser.getPlatoons(armies[0])

@@ -1,7 +1,8 @@
 package models
 
-import models.PlatoonType.*
-import models.TerrainType.*
+import models.enums.PlatoonType
+import models.enums.PlatoonType.*
+import models.enums.TerrainType.*
 
 object Constants {
 
