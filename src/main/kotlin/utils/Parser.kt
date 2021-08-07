@@ -27,10 +27,10 @@ object Parser {
         .joinToString(separator = ";") { p -> "${p.type}#${p.count}" }
 
     fun serializeArtillery(armySize: Int, artilleryPosition: Int) =
-        (0 until armySize).map { pos ->
+        (0 until armySize).joinToString("") { pos ->
             if (pos == artilleryPosition)
                 Constants.Artillery.SERIALIZED_REPRESENTATION
             else
                 Constants.Artillery.SERIALIZED_DEFAULT
-        }.joinToString("")
+        }
 }

@@ -1,4 +1,4 @@
-import models.*
+import models.MedievalWar
 import models.enums.TerrainType
 import utils.Parser
 import java.io.File
@@ -22,9 +22,7 @@ fun main() {
     try {
         val battlePlan = medievalWar.planBattle()
         println(Parser.serializePlatoons(battlePlan.battleOrder))
-        if (Toggles.ARTILLERY) {
-            println(Parser.serializeArtillery(firstArmy.size, battlePlan.artilleryPosition))
-        }
+        println(Parser.serializeArtillery(firstArmy.size, battlePlan.artilleryPosition))
     } catch (ex: Exception) {
         println(ex.message)
     }

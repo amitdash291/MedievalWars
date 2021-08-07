@@ -28,7 +28,7 @@ data class MedievalWar(
 
                 if (originalResult == BattleResult.Win) {
                     winCount++
-                } else if (artilleryPosition == DEFAULT_POSITION && Toggles.ARTILLERY) {
+                } else if (artilleryPosition == DEFAULT_POSITION) {
                     artilleryPosition =
                         if (canWinBattleWithArtillery(platoon, opponentPlatoon, terrainType))
                             currentPosition
@@ -59,8 +59,7 @@ data class MedievalWar(
 
     private fun isBattleWonWithArtillery(artilleryPosition: Int, winCount: Int) =
         artilleryPosition > DEFAULT_POSITION &&
-                winCount == firstArmy.size / 2 &&
-                Toggles.ARTILLERY
+                winCount == firstArmy.size / 2
 
     private fun canWinBattleWithArtillery(
         platoon: Platoon,
