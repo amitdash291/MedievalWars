@@ -1,6 +1,8 @@
 package models
 
 import models.Constants.ADVANTAGE_FACTOR
+import models.Constants.ADVANTAGE_FACTOR_DEFAULT
+import models.Constants.TERRAIN_EFFECT_DEFAULT
 import models.enums.PlatoonType
 import models.enums.TerrainType
 
@@ -13,8 +15,8 @@ data class PlatoonConfiguration(
         if (advantageAgainst.contains(platoonType))
             ADVANTAGE_FACTOR
         else
-            1
+            ADVANTAGE_FACTOR_DEFAULT
 
     fun getTerrainEffect(terrainType: TerrainType) =
-        terrainEffectMap.getOrDefault(terrainType, 1.0)
+        terrainEffectMap.getOrDefault(terrainType, TERRAIN_EFFECT_DEFAULT)
 }

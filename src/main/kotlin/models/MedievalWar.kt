@@ -1,7 +1,6 @@
 package models
 
 import models.Constants.Artillery
-import models.Constants.DEFAULT_POSITION
 import models.enums.BattleResult
 import models.enums.TerrainType
 import models.exceptions.NoWinningPlanException
@@ -18,7 +17,7 @@ data class MedievalWar(
 
         for (positions in permutatedPositionsList) {
             var winCount = 0
-            var artilleryPosition = DEFAULT_POSITION
+            var artilleryPosition = Artillery.DEFAULT_POSITION
 
             for (currentPosition in positions.indices) {
                 val platoon = firstArmy[positions[currentPosition]]
@@ -28,18 +27,18 @@ data class MedievalWar(
 
                 if (originalResult == BattleResult.Win) {
                     winCount++
-                } else if (artilleryPosition == DEFAULT_POSITION) {
+                } else if (artilleryPosition == Artillery.DEFAULT_POSITION) {
                     artilleryPosition =
                         if (canWinBattleWithArtillery(platoon, opponentPlatoon, terrainType))
                             currentPosition
                         else
-                            DEFAULT_POSITION
+                            Artillery.DEFAULT_POSITION
                 }
 
                 if (isBattleWon(winCount)) {
                     return BattlePlan(
                         battleOrder = positions.map { p -> firstArmy[p] },
-                        artilleryPosition = DEFAULT_POSITION
+                        artilleryPosition = Artillery.DEFAULT_POSITION
                     )
                 }
             }
@@ -58,7 +57,7 @@ data class MedievalWar(
     private fun isBattleWon(winCount: Int) = winCount > firstArmy.size / 2
 
     private fun isBattleWonWithArtillery(artilleryPosition: Int, winCount: Int) =
-        artilleryPosition > DEFAULT_POSITION &&
+        artilleryPosition > Artillery.DEFAULT_POSITION &&
                 winCount == firstArmy.size / 2
 
     private fun canWinBattleWithArtillery(

@@ -8,13 +8,15 @@ object Constants {
 
     object Artillery {
         const val STRENGTH = 50
+        const val DEFAULT_POSITION = -1
         const val SERIALIZED_REPRESENTATION = "A"
         const val SERIALIZED_DEFAULT = "."
     }
 
     const val PARSING_DELIMITER = ";"
     const val ADVANTAGE_FACTOR = 2
-    const val DEFAULT_POSITION = -1
+    const val ADVANTAGE_FACTOR_DEFAULT = 1
+    const val TERRAIN_EFFECT_DEFAULT = 1.0
 
     val PLATOON_CONFIGURATIONS: Map<PlatoonType, PlatoonConfiguration> = mapOf(
         Militia to PlatoonConfiguration(
