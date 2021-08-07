@@ -1,7 +1,6 @@
 package utils
 
-import models.Platoon
-import models.PlatoonType
+import models.*
 
 object Parser {
     fun getPlatoons(army: String): List<Platoon> =
@@ -25,4 +24,12 @@ object Parser {
 
     fun serializePlatoons(army: List<Platoon>): String = army
         .joinToString(separator = ";") { p -> "${p.type}#${p.count}" }
+
+    fun serializeArtillery(armySize: Int, artilleryPosition: Int) =
+        (0 until armySize).map { pos ->
+            if (pos == artilleryPosition)
+                Constants.Artillery.SERIALIZED_REPRESENTATION
+            else
+                Constants.Artillery.SERIALIZED_DEFAULT
+        }.joinToString("")
 }

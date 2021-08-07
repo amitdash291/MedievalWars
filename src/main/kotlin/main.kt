@@ -1,13 +1,13 @@
-import models.MedievalWar
-import models.TerrainType
+import models.*
 import utils.Parser
 import java.io.File
 
 fun main(args: Array<String>) {
     val armies = File("src/main/kotlin/input.txt")
         .readLines()
+    val firstArmy = Parser.getPlatoons(armies[0])
     val medievalWar = MedievalWar(
-        firstArmy = Parser.getPlatoons(armies[0]),
+        firstArmy = firstArmy,
         secondArmy = Parser.getPlatoons(armies[1]),
         listOf(
             TerrainType.Default,
@@ -19,9 +19,12 @@ fun main(args: Array<String>) {
     )
 
     try {
-        val winningArmy = medievalWar.planBattleOrder()
-        println(Parser.serializePlatoons(winningArmy))
-    } catch(ex: Exception) {
+        val battlePlan = medievalWar.planBattle()
+        println(Parser.serializePlatoons(battlePlan.battleOrder))
+        if (Toggles.ARTILLERY) {
+            println(Parser.serializeArtillery(firstArmy.size, battlePlan.artilleryPosition))
+        }
+    } catch (ex: Exception) {
         println(ex.message)
     }
 }

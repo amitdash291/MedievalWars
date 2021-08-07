@@ -31,7 +31,8 @@ class MedievalWarTest : WordSpec({
                 val medievalWar = MedievalWar(firstArmy, secondArmy, terrainTypes)
 
                 medievalWar
-                    .planBattleOrder()
+                    .planBattle()
+                    .battleOrder
                     .shouldContainExactly(
                         Platoon(PlatoonType.Militia, 30),
                         Platoon(PlatoonType.FootArcher, 20),
@@ -67,7 +68,8 @@ class MedievalWarTest : WordSpec({
                 val medievalWar = MedievalWar(firstArmy, secondArmy, terrainTypes)
 
                 medievalWar
-                    .planBattleOrder()
+                    .planBattle()
+                    .battleOrder
                     .shouldContainExactly(
                         Platoon(PlatoonType.HeavyCavalry, 5),
                         Platoon(PlatoonType.Militia, 10),

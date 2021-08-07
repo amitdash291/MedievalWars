@@ -54,4 +54,15 @@ class ParserTest : WordSpec({
             }
         }
     }
+
+    "Artillery Output Parsing" When {
+        "army size is 5 and artillery position is 3" Should {
+            "serialize output as ...A." {
+                Parser.serializeArtillery(
+                    armySize = 5,
+                    artilleryPosition = 3
+                ).shouldBe("...A.")
+            }
+        }
+    }
 })

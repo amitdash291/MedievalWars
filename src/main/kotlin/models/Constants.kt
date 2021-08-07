@@ -5,9 +5,14 @@ import models.TerrainType.*
 
 object Constants {
 
-    const val ARTILLERY_STRENGTH = 50
+    object Artillery {
+        const val STRENGTH = 50
+        const val SERIALIZED_REPRESENTATION = "A"
+        const val SERIALIZED_DEFAULT = "."
+    }
 
     const val ADVANTAGE_FACTOR = 2
+    const val DEFAULT_POSITION = -1
 
     val PLATOON_CONFIGURATIONS: Map<PlatoonType, PlatoonConfiguration> = mapOf(
         Militia to PlatoonConfiguration(
