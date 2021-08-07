@@ -52,7 +52,7 @@ data class MedievalWar(
             }
         }
 
-        return battlePlanWithArtillery ?: throw NoWinningPlanException()
+        return battlePlanWithArtillery ?: throw NoWinningPlanException("There is no chance of winning")
     }
 
     private fun isBattleWon(winCount: Int) = winCount > firstArmy.size / 2

@@ -1,13 +1,16 @@
 package models
 
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
 import models.enums.PlatoonType
 import models.enums.TerrainType
+import models.exceptions.NoWinningPlanException
 
 class MedievalWarTest : WordSpec({
     "MedievalWar" When {
-        "given two armies" Should {
+        "given two armies with 5 platoons" Should {
             "return the winning order for the first army with at least 3 wins" {
                 val firstArmy = listOf(
                     Platoon(PlatoonType.Spearmen, 10),
@@ -30,11 +33,11 @@ class MedievalWarTest : WordSpec({
                     TerrainType.Default,
                     TerrainType.Default,
                 )
-                val medievalWar = MedievalWar(firstArmy, secondArmy, terrainTypes)
 
-                medievalWar
+                val actualPlan = MedievalWar(firstArmy, secondArmy, terrainTypes)
                     .planBattle()
-                    .battleOrder
+
+                actualPlan.battleOrder
                     .shouldContainExactly(
                         Platoon(PlatoonType.Militia, 30),
                         Platoon(PlatoonType.FootArcher, 20),
@@ -42,9 +45,12 @@ class MedievalWarTest : WordSpec({
                         Platoon(PlatoonType.LightCavalry, 1000),
                         Platoon(PlatoonType.HeavyCavalry, 120),
                     )
+                actualPlan.artilleryPosition
+                    .shouldBe(-1)
             }
         }
-        "given two armies and terrains" Should {
+
+        "given two armies with 5 platoons and respective terrains" Should {
             "return the winning order for the first army with at least 3 wins" {
                 val firstArmy = listOf(
                     Platoon(PlatoonType.Militia, 10),
@@ -67,11 +73,11 @@ class MedievalWarTest : WordSpec({
                     TerrainType.Default,
                     TerrainType.Default,
                 )
-                val medievalWar = MedievalWar(firstArmy, secondArmy, terrainTypes)
 
-                medievalWar
+                val actualPlan = MedievalWar(firstArmy, secondArmy, terrainTypes)
                     .planBattle()
-                    .battleOrder
+
+                actualPlan.battleOrder
                     .shouldContainExactly(
                         Platoon(PlatoonType.HeavyCavalry, 5),
                         Platoon(PlatoonType.Militia, 10),
@@ -79,6 +85,74 @@ class MedievalWarTest : WordSpec({
                         Platoon(PlatoonType.Spearmen, 10),
                         Platoon(PlatoonType.LightCavalry, 100),
                     )
+                actualPlan.artilleryPosition
+                    .shouldBe(-1)
+            }
+        }
+
+        "given two armies with no winning plan" Should {
+            "reinforce a platoon with artillery and return the winning plan including artillery position" {
+                val firstArmy = listOf(
+                    Platoon(PlatoonType.Militia, 11),
+                    Platoon(PlatoonType.Militia, 65),
+                    Platoon(PlatoonType.Militia, 5),
+                )
+                val secondArmy = listOf(
+                    Platoon(PlatoonType.Militia, 60),
+                    Platoon(PlatoonType.Militia, 60),
+                    Platoon(PlatoonType.Militia, 60),
+                )
+                val terrainTypes = listOf(
+                    TerrainType.Default,
+                    TerrainType.Default,
+                    TerrainType.Default,
+                )
+
+                val actualPlan = MedievalWar(
+                    firstArmy = firstArmy,
+                    secondArmy = secondArmy,
+                    terrainTypes = terrainTypes
+                ).planBattle()
+
+                actualPlan.battleOrder
+                    .shouldContainExactly(
+                        Platoon(PlatoonType.Militia, 5),
+                        Platoon(PlatoonType.Militia, 65),
+                        Platoon(PlatoonType.Militia, 11),
+                    )
+                actualPlan.artilleryPosition
+                    .shouldBe(2)
+            }
+        }
+
+        "given two armies with no winning plan and no artillery reinforcement winning possibility" Should {
+            "throw NoWinningPlanException" {
+                val firstArmy = listOf(
+                    Platoon(PlatoonType.Militia, 9),
+                    Platoon(PlatoonType.Militia, 65),
+                    Platoon(PlatoonType.Militia, 5),
+                )
+                val secondArmy = listOf(
+                    Platoon(PlatoonType.Militia, 60),
+                    Platoon(PlatoonType.Militia, 60),
+                    Platoon(PlatoonType.Militia, 60),
+                )
+                val terrainTypes = listOf(
+                    TerrainType.Default,
+                    TerrainType.Default,
+                    TerrainType.Default,
+                )
+
+                val actualException = shouldThrowExactly<NoWinningPlanException> {
+                    MedievalWar(
+                        firstArmy = firstArmy,
+                        secondArmy = secondArmy,
+                        terrainTypes = terrainTypes
+                    ).planBattle()
+                }
+
+                actualException.message
+                    .shouldBe("There is no chance of winning")
             }
         }
     }

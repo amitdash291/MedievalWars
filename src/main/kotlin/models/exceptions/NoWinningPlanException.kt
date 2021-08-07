@@ -1,3 +1,3 @@
 package models.exceptions
 
-class NoWinningPlanException : Exception()
+class NoWinningPlanException(message: String) : Exception(message)
