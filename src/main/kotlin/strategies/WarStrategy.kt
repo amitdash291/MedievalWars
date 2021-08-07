@@ -14,7 +14,7 @@ object WarStrategy {
         firstArmyPositions: List<Int>
     ): WarResult {
         var winCount = 0
-        var resultWithArtillery: WarResult = WarResult.NoResultWithArtillery
+        var resultWithArtillery: WarResult = WarResult.Loss
 
         for (currentPosition in firstArmyPositions.indices) {
             val firstArmyPlatoonPosition = firstArmyPositions[currentPosition]
@@ -29,7 +29,7 @@ object WarStrategy {
                         return WarResult.Victory
                 }
                 else -> {
-                    if (resultWithArtillery is WarResult.NoResultWithArtillery &&
+                    if (resultWithArtillery is WarResult.Loss &&
                         canWinWithArtillery(firstArmyPlatoon, secondArmyPlatoon, terrainType)
                     ) resultWithArtillery = WarResult.VictoryWithArtillery(currentPosition)
                 }

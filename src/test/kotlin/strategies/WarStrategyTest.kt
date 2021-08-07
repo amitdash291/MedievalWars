@@ -1,7 +1,6 @@
 package strategies
 
 import io.kotest.core.spec.style.WordSpec
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import models.*
 import models.enums.PlatoonType
@@ -21,13 +20,12 @@ class WarStrategyTest : WordSpec({
                     Platoon(type = PlatoonType.Militia, count = 9),
                     Platoon(type = PlatoonType.Militia, count = 25),
                 )
-                val winningPositionsForFirstArmy = listOf(1, 0, 2)
 
                 WarStrategy.getWarResult(
                     firstArmy = firstArmy,
                     secondArmy = secondArmy,
                     terrainTypes = getDefaultTerrainTypes(firstArmy.size),
-                    firstArmyPositions = winningPositionsForFirstArmy
+                    firstArmyPositions = listOf(1, 0, 2)
                 )
                     .shouldBe(WarResult.Victory)
             }
@@ -47,13 +45,12 @@ class WarStrategyTest : WordSpec({
                     Platoon(type = PlatoonType.Militia, count = 35),
                     Platoon(type = PlatoonType.Militia, count = 15),
                 )
-                val winningPositionsForFirstArmy = listOf(0, 1, 2, 3)
 
                 WarStrategy.getWarResult(
                     firstArmy = firstArmy,
                     secondArmy = secondArmy,
                     terrainTypes = getDefaultTerrainTypes(firstArmy.size),
-                    firstArmyPositions = winningPositionsForFirstArmy
+                    firstArmyPositions = listOf(0, 1, 2, 3)
                 )
                     .shouldBe(WarResult.Loss)
             }
