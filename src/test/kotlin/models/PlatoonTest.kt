@@ -2,6 +2,9 @@ package models
 
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
+import models.PlatoonType.*
+import models.TerrainType.Hill
+import models.TerrainType.Muddy
 
 class PlatoonTest : WordSpec({
     "Platoon Fights - Militia" When {
@@ -37,8 +40,8 @@ class PlatoonTest : WordSpec({
 
         "fights with a Spearmen Platoon with less than double the number of Militia soldiers" Should {
             "return BattleResult.Win" {
-                val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 30)
-                val spearmenPlatoon = Platoon(type = PlatoonType.Spearmen, count = 59)
+                val militiaPlatoon = Platoon(type = Militia, count = 30)
+                val spearmenPlatoon = Platoon(type = Spearmen, count = 59)
 
                 militiaPlatoon.fight(spearmenPlatoon)
                     .shouldBe(BattleResult.Win)
@@ -47,8 +50,8 @@ class PlatoonTest : WordSpec({
 
         "fights with a Spearmen Platoon with double the number of Militia soldiers" Should {
             "return BattleResult.Draw" {
-                val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 30)
-                val spearmenPlatoon = Platoon(type = PlatoonType.Spearmen, count = 60)
+                val militiaPlatoon = Platoon(type = Militia, count = 30)
+                val spearmenPlatoon = Platoon(type = Spearmen, count = 60)
 
                 militiaPlatoon.fight(spearmenPlatoon)
                     .shouldBe(BattleResult.Draw)
@@ -57,8 +60,8 @@ class PlatoonTest : WordSpec({
 
         "fights with a Spearmen Platoon with more than double the number of Militia soldiers" Should {
             "return BattleResult.Loss" {
-                val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 30)
-                val spearmenPlatoon = Platoon(type = PlatoonType.Spearmen, count = 61)
+                val militiaPlatoon = Platoon(type = Militia, count = 30)
+                val spearmenPlatoon = Platoon(type = Spearmen, count = 61)
 
                 militiaPlatoon.fight(spearmenPlatoon)
                     .shouldBe(BattleResult.Loss)
@@ -67,8 +70,8 @@ class PlatoonTest : WordSpec({
 
         "fights with a HeavyCavalry Platoon with more than double the number of HeavyCavalry soldiers" Should {
             "return BattleResult.Win" {
-                val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 81)
-                val heavyCavalryPlatoon = Platoon(type = PlatoonType.HeavyCavalry, count = 40)
+                val militiaPlatoon = Platoon(type = Militia, count = 81)
+                val heavyCavalryPlatoon = Platoon(type = HeavyCavalry, count = 40)
 
                 militiaPlatoon.fight(heavyCavalryPlatoon)
                     .shouldBe(BattleResult.Win)
@@ -77,8 +80,8 @@ class PlatoonTest : WordSpec({
 
         "fights with a HeavyCavalry Platoon with double the number of HeavyCavalry soldiers" Should {
             "return BattleResult.Draw" {
-                val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 80)
-                val heavyCavalryPlatoon = Platoon(type = PlatoonType.HeavyCavalry, count = 40)
+                val militiaPlatoon = Platoon(type = Militia, count = 80)
+                val heavyCavalryPlatoon = Platoon(type = HeavyCavalry, count = 40)
 
                 militiaPlatoon.fight(heavyCavalryPlatoon)
                     .shouldBe(BattleResult.Draw)
@@ -87,8 +90,8 @@ class PlatoonTest : WordSpec({
 
         "fights with a HeavyCavalry Platoon with less than double the number of HeavyCavalry soldiers" Should {
             "return BattleResult.Loss" {
-                val militiaPlatoon = Platoon(type = PlatoonType.Militia, count = 79)
-                val heavyCavalryPlatoon = Platoon(type = PlatoonType.HeavyCavalry, count = 40)
+                val militiaPlatoon = Platoon(type = Militia, count = 79)
+                val heavyCavalryPlatoon = Platoon(type = HeavyCavalry, count = 40)
 
                 militiaPlatoon.fight(heavyCavalryPlatoon)
                     .shouldBe(BattleResult.Loss)
@@ -96,62 +99,45 @@ class PlatoonTest : WordSpec({
         }
     }
 
-    "Platoon Advantages - Militia" When {
-        "getting advantage factor over Spearmen / LightCavalry" Should {
-            "return 2" {
-                Platoon(type = PlatoonType.Militia)
-                    .getAdvantageFactorOver(Platoon(type = PlatoonType.Spearmen))
-                    .shouldBe(2)
-                Platoon(type = PlatoonType.Militia)
-                    .getAdvantageFactorOver(Platoon(type = PlatoonType.LightCavalry))
-                    .shouldBe(2)
+    "Platoon Configuration - Militia" When {
+        "getting configuration" Should {
+            "return Militia Configuration" {
+                Platoon(type = Militia)
+                    .getConfiguration()
+                    .shouldBe(
+                        PlatoonConfiguration(
+                            advantageAgainst = listOf(Spearmen, PlatoonType.LightCavalry),
+                            terrainEffectMap = mapOf(
+                                Hill to 0.5,
+                                Muddy to 2.0,
+                            )
+                        )
+                    )
             }
         }
+    }
 
-        "getting advantage factor over Militia / HeavyCavalry / FootArcher / CavalryArcher" Should {
-            "return 1" {
-                Platoon(type = PlatoonType.Militia)
-                    .getAdvantageFactorOver(Platoon(type = PlatoonType.Militia))
-                    .shouldBe(1)
-                Platoon(type = PlatoonType.Militia)
-                    .getAdvantageFactorOver(Platoon(type = PlatoonType.HeavyCavalry))
-                    .shouldBe(1)
-                Platoon(type = PlatoonType.Militia)
-                    .getAdvantageFactorOver(Platoon(type = PlatoonType.FootArcher))
-                    .shouldBe(1)
-                Platoon(type = PlatoonType.Militia)
-                    .getAdvantageFactorOver(Platoon(type = PlatoonType.CavalryArcher))
-                    .shouldBe(1)
+    "Platoon Strength - Militia" When {
+        "opponent is Spearmen" Should {
+            "return double of the count of soldiers" {
+                Platoon(type = Militia, count = 100)
+                    .getStrength(Platoon(Spearmen), TerrainType.Default)
+                    .shouldBe(200.0)
             }
         }
-
-        "getting disdvantage factor over HeavyCavalry / FootArcher" Should {
-            "return 2" {
-                Platoon(type = PlatoonType.Militia)
-                    .getDisadvantageFactorOver(Platoon(type = PlatoonType.HeavyCavalry))
-                    .shouldBe(2)
-                Platoon(type = PlatoonType.Militia)
-                    .getDisadvantageFactorOver(Platoon(type = PlatoonType.FootArcher))
-                    .shouldBe(2)
+        "terrain is Hill" Should {
+            "return half of the count of soldiers" {
+                Platoon(type = Militia, count = 100)
+                    .getStrength(Platoon(Militia), Hill)
+                    .shouldBe(50.0)
             }
         }
-
-        "getting advantage factor over Militia / Spearmen / LightCavalry / CavalryArcher" Should {
-            "return 1" {
-                Platoon(type = PlatoonType.Militia)
-                    .getDisadvantageFactorOver(Platoon(type = PlatoonType.Militia))
-                    .shouldBe(1)
-                 Platoon(type = PlatoonType.Militia)
-                    .getDisadvantageFactorOver(Platoon(type = PlatoonType.Spearmen))
-                    .shouldBe(1)
-                Platoon(type = PlatoonType.Militia)
-                    .getDisadvantageFactorOver(Platoon(type = PlatoonType.LightCavalry))
-                    .shouldBe(1)
-                Platoon(type = PlatoonType.Militia)
-                    .getDisadvantageFactorOver(Platoon(type = PlatoonType.CavalryArcher))
-                    .shouldBe(1)
+        "terrain is Hill and opponent is Spearmen" Should {
+            "return equal count of soldiers" {
+                Platoon(type = Militia, count = 100)
+                    .getStrength(Platoon(Spearmen), Hill)
+                    .shouldBe(100.0)
             }
         }
-
     }
 })

@@ -3,8 +3,7 @@ package utils
 import java.util.*
 
 object MathsUtil {
-    fun generatePermutations(n: Int): List<List<Int>> {
-        val list = (1..n).toList()
+    fun generatePermutations(range: IntRange): List<List<Int>> {
         val permutations = mutableListOf<List<Int>>()
 
         // Heap's algorithm - https://en.wikipedia.org/wiki/Heap%27s_algorithm
@@ -24,7 +23,7 @@ object MathsUtil {
             }
         }
 
-        generatePermutations(list.count(), list)
+        generatePermutations(range.count(), range.toList())
         return permutations
     }
 }

@@ -5,6 +5,10 @@ plugins {
     application
 }
 
+application {
+    mainClass.set("MainKt")
+}
+
 group = "me.amit.dash"
 version = "1.0-SNAPSHOT"
 
@@ -27,6 +31,8 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "9"
 }
 
-application {
-    mainClassName = "MainKt"
+tasks.register("githubBuild") {
+    dependsOn(tasks.build, tasks.test)
+    group = "me.amit.dash"
+    description = "$ ./gradlew githubBuild # runs build on GitHub Action"
 }

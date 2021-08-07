@@ -1,4 +1,5 @@
 import models.MedievalWar
+import models.TerrainType
 import utils.Parser
 import java.io.File
 
@@ -7,7 +8,14 @@ fun main(args: Array<String>) {
         .readLines()
     val medievalWar = MedievalWar(
         firstArmy = Parser.getPlatoons(armies[0]),
-        secondArmy = Parser.getPlatoons(armies[1])
+        secondArmy = Parser.getPlatoons(armies[1]),
+        listOf(
+            TerrainType.Default,
+            TerrainType.Default,
+            TerrainType.Default,
+            TerrainType.Default,
+            TerrainType.Default,
+        )
     )
 
     try {
